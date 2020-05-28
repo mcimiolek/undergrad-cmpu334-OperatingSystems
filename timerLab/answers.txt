@@ -1,0 +1,137 @@
+Part A Forking Questions:
+-------------------------
+
+1. How many processes are there, (including the original parent process and all
+subsequent children)? It may help to map things out on paper.
+
+There are 7 processes.
+   
+   
+2. How many times does the message `"I am child C"` get printed out? Which
+process(es) is/are the parent(s) of child(ren) C?
+
+The message "I am child C" gets printed 3 times. The processes Parent, Child A,
+and Child B are the parents of Child C.
+
+
+3. Do all copies of `"I am child C"` get printed consecutively? Do they all
+terminate consecutively? Justify why or why not.
+
+No they do not. The looped wait statement causes the process Parent to wait
+until all child processes, finish before it continues, and as this comes before 
+the place where Children C can be created, it cannot create it's direct Child C 
+until after the other Child C of its children have already completed and their 
+parent processes have completed, which prevents them from completing 
+consecutively.
+
+
+4. Which process prints the message `"Huh, I'm awake? Who am I?"`? How many
+processes are running when this message is printed (including the process
+printing it)?
+
+The process Parent prints this statement. As the wait in the loop will cause
+Parent to wait to continue until all the children are done, and all the children
+have to wait for their Child C's to finish before they can, there should only be
+one process, process Parent running.
+
+
+5. How many times is `Race to the finish?` printed? Which processes print the
+message?
+
+It is only printed once, and by the process Parent.
+
+
+6. How many times is the message `I'm done!` printed?
+
+The message I'm done! is prined 5 times.
+
+
+7. What guarantees, if any, can be made about when a child C process finishes
+relative to the process that create it? How do you know?
+
+A Child C process will finish before its parent process because there is a wait
+statement that prevents the parent processes from finishing until it has
+finished.
+
+
+8. Is it possible to know which process will finish first? What about which
+process will finish last? If yes, explain what guarantees it. If no, specify
+which processes could finish first/last.
+
+It is not possible to know which process will finish first, and either the Child
+C process of process Child A or the Child C process of process Child B can
+finish first. It is not possible to know which process will finish last, and
+either the Parent process or the Racing Child process will finish last.
+
+
+
+
+
+Part B Timing Questions: 
+------------------------
+
+1. Run your code a few times. Are your timing results exactly the same? Are they
+generally consistent?
+
+No they are not exactly the same, but they are generally consistent. The only
+interesting thing I noticed that was interesting was that each run the first
+individual time before being averaged was significantly longer, this was most
+likely becuase all of the information for that process had to be retrieved from
+the hard drive for that first run.
+
+
+3. What happens to your results when you increase the number of iterations? Why
+might this be?
+
+They tended to be more consistent. This is probably because any outliers ended
+up having less of an impact on the final result of the average.
+
+
+5. Try running your code on a machine in SP-309 and in Asprey. Do you observe
+any differences? Speculate wildly about the cause!
+
+Yes I did. The computers in the asprey lab were faster than the computers in
+SP-309. I think it has to do with the computers in Asprey being significantly
+more powerfuil and being able to run more process at once, maybe even the same
+one repeatedly together?
+
+
+
+
+
+Part C Scheduler Questions
+--------------------------
+
+1. Assuming that all jobs enter at the same time in a SJF scheduler, what order
+will the jobs execute in? Calculate the turnaround time, and response time for
+each job.
+
+The jobs will execute in the order: 5,1,3,4,2,0. The turnaround time for job 5
+is 1, and the response time is 0. The turnaround time for job 1 is 6, and the
+response time is 1. The turnaround time for job 3 is 13, and the response time
+is 6. The turnaround time for job 4 is 21, and the response time is 13. The
+turnaround time for job 2 is 30, and the response time is 9. The the turnaround
+time for job 0 is 40, and the response time is 30.
+
+
+2. Now suppose that the same list of jobs is being scheduled by a FIFO
+scheduler, where the order of arrival corresponds to the order of the jobs in
+the list. Calculate the turnaround time and response time for each job.
+
+The turnaround time for job 0 is 10, and the response time is 0. The turnaround 
+time for job 1 is 15, and the response time is 10. The turnaround time for job 2 
+is 24, and the response time is 15. The turnaround time for job 3 is 31, and the 
+response time is 24. The turnaround time for job 4 is 39, and the response time 
+is 31. The turnaround time for job 5 is 40, and the response time is 39.
+
+
+3. Finally, suppose the same jobs are being scheduled by a round-robin scheduler
+with a time quantum of 3 time units. Trace the execution of the jobs at each
+quatnta and calculate the turnaround time and response time for each job. Assume
+the RR order is the same as the order in which the jobs are listed.
+
+The turnaround time for job 0 is 40, and the response time is 0. The turnaround 
+time for job 1 is 21, and the response time is 3. The turnaround time for job 2 
+is 36, and the response time is 6. The turnaround time for job 3 is 37, and the 
+response time is 9. The turnaround time for job 4 is 39, and the response time 
+is 12. The turnaround time for job 5 is 16, and the response time is 15.
